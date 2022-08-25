@@ -1,5 +1,5 @@
 # Probability distribution for the gravitational constant G
-Inference of the gravitational constant G using the experiments listed in [Tisinga et al. (2021)](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.93.025010).
+Inference of the gravitational constant probability G using the experiments listed in [Tisinga et al. (2021)](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.93.025010).
 
 The parametric inference runs with `python par_inference.py`.
 

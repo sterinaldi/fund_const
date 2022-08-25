@@ -12,10 +12,6 @@ sigma_max = 0.01
 a_max = 100
 b_max = 100
 
-out_folder = Path('output')
-if not out_folder.exists():
-    out_folder.mkdir()
-
 # UN
 def uniform(x):
     return 0.
@@ -68,7 +64,7 @@ class G_inference(cpnest.model.Model):
         return np.sum(log_norm_1d(x['m'], self.values, x['s']+self.errors))
 
 
-def plot_distribution(post, model):
+def plot_distribution(post, model, out_folder):
 
     G = np.linspace(G_min, G_max, 1000)
     samps = np.column_stack([post['m'], np.sqrt(post['s'])])
@@ -84,7 +80,7 @@ def plot_distribution(post, model):
            quantiles=[0.05, 0.16, 0.5, 0.84, 0.95],
            show_titles=True, title_fmt='.7f', title_kwargs={"fontsize": 16}, label_kwargs={"fontsize": 16},
            use_math_text=True)
-    c.savefig(Path(out_folder'joint_posterior_{0}.pdf'.format(model)), bbox_inches='tight')
+    c.savefig(Path(out_folder,'joint_posterior_{0}.pdf'.format(model)), bbox_inches='tight')
     
     fig, ax = plt.subplots()
     ax.fill_between(G, high_90, low_90, color = 'mediumturquoise', alpha = 0.5)

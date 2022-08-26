@@ -1,3 +1,7 @@
+if [ !-d "output" ]; then
+    mkdir output
+fi
+python sigma_level.py
 python gensamps.py
 
 python par_inference.py

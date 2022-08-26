@@ -1,8 +1,4 @@
 # Probability distribution for the gravitational constant G
 Inference of the gravitational constant probability G using the experiments listed in [Tisinga et al. (2021)](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.93.025010).
 
-The parametric inference runs with `python par_inference.py`.
-
-The nonparametric reconstruction requires [figaro](https://github.com/sterinaldi/figaro). Before running this inference, please run `python gensamps.py`, to generate the samples to be fed to figaro. FIGARO runs with `figaro-hierarchical -i experiments -o output --symbol 'G\times 10^{-11}' --unit 'm^3km^{-1}s^{-2}' -b '[6.668, 6.678]' -s`.
-
-Once the two inference are finished, the plots in Figure 1 of Middleton et al (in preparation) can be obtained via `python make_plots.py`
+This code implements the two inferences described in Middleton et al (in preparation). To run it, simply use the command `source run_inference.sh`.

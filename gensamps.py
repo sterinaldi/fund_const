@@ -25,6 +25,3 @@ for m, s, n in zip(means, std, names):
     mins.append(samps.min())
     maxs.append(samps.max())
     np.savetxt(Path(exp_folder, n+'.txt'), samps)
-
-print('Min G: {} Max G: {}'.format(np.min(mins), np.max(maxs)))
-

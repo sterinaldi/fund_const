@@ -6,6 +6,9 @@ from scipy.special import gammaln
 from pathlib import Path
 import corner
 
+from matplotlib import rcParams
+rcParams['text.usetex'] = True
+
 G_min = 6.668
 G_max = 6.678
 sigma_max = 0.01
@@ -76,9 +79,9 @@ def plot_distribution(post, model, out_folder):
     low_90, low_68, med, high_68, high_90 = np.percentile(pdf, [5,16,50,84,95], axis=0)
         
     c = corner.corner(samps,
-           labels= [r'${0}$'.format(lab) for lab in dict_names[model]],
+           labels= [r'$\hat{G}$',r'$\Sigma$'],
            quantiles=[0.05, 0.16, 0.5, 0.84, 0.95],
-           show_titles=True, title_fmt='.7f', title_kwargs={"fontsize": 16}, label_kwargs={"fontsize": 16},
+           show_titles=True, title_fmt='.5f', title_kwargs={"fontsize": 16}, label_kwargs={"fontsize": 16},
            use_math_text=True)
     c.savefig(Path(out_folder,'joint_posterior_{0}.pdf'.format(model)), bbox_inches='tight')
     

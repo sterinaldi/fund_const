@@ -7,6 +7,8 @@ from figaro.cumulative import fast_cumulative
 from par_inference import out_folder
 from seaborn import color_palette
 
+out_file = open(Path(out_folder, 'G_values.txt'), 'w')
+
 palette =  color_palette('Paired', 3)
 
 codata_val = 6.67430
@@ -57,7 +59,9 @@ for i, mod in enumerate(models):
     ax.errorbar(pcs[2], hs[2*i], xerr = np.atleast_2d([pcs[2]-pcs[0], pcs[4]-pcs[2]]).T, color = colors[mod], marker = 'o', ms = 4)
     ax.axhline(hs[2*i+1], lw = 0.03, c = 'k', ls = ':')
     ax.errorbar(pcs[2], hs[2*i+1], xerr = np.atleast_2d([pcs[2]-pcs[1], pcs[3]-pcs[2]]).T, color = colors[mod], marker = 'o', ms = 4)
-    print('{0}: {1} - {2} + {3}. Conservative: - {4} + {5}'.format(mod, pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]))
+    print('{0}: '.format(mod)+'{:0.5f} - {:1.5f} + {:2.5f}. Conservative: - {:3.5f} + {:4.5f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]))
+    print('{0}: '.format(mod)+'{:0.5f} - {:1.5f} + {:2.5f}. Conservative: - {:3.5f} + {:4.5f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]), file = out_file)
+
 
 plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA}$', '$\mathrm{IG}$', '$\mathrm{IG - Conservative}$','$\mathrm{JF}$', '$\mathrm{JF - Conservative}$','$\mathrm{UN}$', '$\mathrm{UN - Conservative}$'])
 ax.grid(visible = False)
@@ -96,7 +100,8 @@ ax.errorbar(pcs[2], hs[0], xerr = np.atleast_2d([pcs[2]-pcs[0], pcs[4]-pcs[2]]).
 ax.axhline(hs[1], lw = 0.03, c = 'k', ls = ':')
 ax.errorbar(pcs[2], hs[1], xerr = np.atleast_2d([pcs[2]-pcs[1], pcs[3]-pcs[2]]).T, color = 'steelblue', marker = 'o', ms = 4)
     
-print('(H)DPGMM: {1} - {2} + {3}. Conservative: - {4} + {5}'.format(mod, pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]))
+print('(H)DPGMM: {:0.5f} - {:1.5f} + {:2.5f}. Conservative: - {:3.5f} + {:4.5f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]))
+print('(H)DPGMM: {:0.5f} - {:1.5f} + {:2.5f}. Conservative: - {:3.5f} + {:4.5f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]), file = out_file)
 plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA}$', '$\mathrm{(H)DPGMM}$', '$\mathrm{(H)DPGMM - Conservative}$'])
 ax.grid(visible = False)
 ax.set_xlim(G.min(),G.max())
@@ -104,3 +109,5 @@ ax.set_xlabel('$G\ [\\times10^{-11}\ \mathrm{m}^3\mathrm{kg}^{-1}\mathrm{s}^{-2}
 
 ax.tick_params(axis='y', which='major', labelsize=6)
 fig.savefig(Path(out_folder, 'hdpgmm.pdf'), bbox_inches = 'tight')
+
+out_file.close()

@@ -1,6 +1,7 @@
 if [ !-d "output" ]; then
     mkdir output
 fi
+python least_squares.py
 python sigma_level.py
 python gensamps.py
 

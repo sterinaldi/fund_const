@@ -93,6 +93,6 @@ def plot_distribution(post, model, out_folder):
     
     ax.set_xlabel('$G\\times10^{-11}\ [\mathrm{m}^3\mathrm{kg}^{-1}\mathrm{s}^{-2}]$')
     ax.set_ylabel('$p(G)$')
-    
+    ax.grid(visible = True)
     fig.savefig(Path(out_folder, 'p_{0}.pdf'.format(model)), bbox_inches = 'tight')
     np.savetxt(Path(out_folder, 'prob_G_{0}.txt'.format(model)), np.array([G, med, low_90, low_68, high_68, high_90]).T, header = 'G 50 5 16 84 95')

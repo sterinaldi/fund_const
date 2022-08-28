@@ -18,7 +18,7 @@ if __name__ == '__main__':
     sigma = []
 
     for mod in models:
-        
+        print('Model {0}'.format(mod))
         M = G_inference(data['value'], data['sigma'], mod)
         work = cpnest.CPNest(M,
                             verbose = 0,

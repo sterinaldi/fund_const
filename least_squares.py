@@ -14,4 +14,4 @@ if __name__ == '__main__':
     X = np.average(v, weights = 1/s)
     dX = np.sqrt(np.average((v-X)**2, weights = 1/s)/(len(v)-1))
 
-    print('Least-squares method: {:1.5f}+-{:2.5f}'.format(X, dX))
+    print('Least-squares method: {:1.8f}+-{:2.8f}'.format(X, dX))

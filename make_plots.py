@@ -102,7 +102,7 @@ if __name__ == '__main__':
     ax.errorbar(options.value, hs[2], xerr = options.error, color = 'blue', marker = 'o', ms = 4)
 
     # This work
-    cdf = fast_cumulative(np.ascontiguousarray(rec['50']*(X[1]-X[0])))
+    cdf = fast_cumulative(np.ascontiguousarray(rec['50']*(rec['x'][1]-rec['x'][0])))
     pcs = [rec['x'][np.where(cdf < perc)].max() for perc in [0.05, 0.16, 0.50, 0.84, 0.95]]
     ax.axhline(hs[0], lw = 0.03, c = 'k', ls = ':')
     ax.errorbar(pcs[2], hs[0], xerr = np.atleast_2d([pcs[2]-pcs[0], pcs[4]-pcs[2]]).T, color = 'steelblue', marker = 'o', ms = 4)
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     print('(H)DPGMM: {:0.8f} - {:1.8f} + {:2.8f}. Conservative: - {:3.8f} + {:4.8f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]), file = out_file)
     plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA}$', '$\mathrm{(H)DPGMM}$', '$\mathrm{(H)DPGMM - Conservative}$'])
     ax.grid(visible = False)
-    ax.set_xlim(X.min(),X.max())
+    ax.set_xlim(rec['x'].min(),rec['x'].max())
     ax.set_xlabel('$' + options.label+'\ ['+options.unit+']$')
 
     ax.tick_params(axis='y', which='major', labelsize=6)

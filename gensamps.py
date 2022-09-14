@@ -18,7 +18,7 @@ if __name__ == '__main__':
     if not exp_folder.exists():
         exp_folder.mkdir()
 
-    data  = np.genfromtxt(filename, names = True, dtype = (float, float, 'U10'))
+    data  = np.genfromtxt(filename, names = True, dtype = (float, float, 'U16'))
 
     means = data['value']
     std   = data['sigma']

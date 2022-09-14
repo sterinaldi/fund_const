@@ -9,9 +9,6 @@ import corner
 from matplotlib import rcParams
 rcParams['text.usetex'] = True
 
-G_min = 6.668
-G_max = 6.678
-sigma_max = 0.01
 a_max = 100
 b_max = 100
 
@@ -30,24 +27,29 @@ def inverse_gamma(x):
 def log_norm_1d(x, m, s):
     return -(x-m)**2/(2*s) - 0.5*np.log(2*np.pi*s)
 
-dict_names = {'UN':['m','s'],
-              'JF':['m','s'],
-              'IG':['m','s','a','b']
-             }
-
-dict_bounds = {'UN':[[G_min, G_max], [0,sigma_max**2]],
-               'JF':[[G_min, G_max], [0,sigma_max**2]],
-               'IG':[[G_min, G_max], [0,sigma_max**2], [0,a_max], [0,b_max]],
-              }
-
-dict_priors = {'UN': uniform,
-               'JF': jeffreys,
-               'IG': inverse_gamma
-              }
 
 class G_inference(cpnest.model.Model):
     
-    def __init__(self, values, errors, model):
+    def __init__(self, values, errors, model, bounds):
+        
+        X_min = bounds[0]
+        X_max = bounds[1]
+        sigma_max =(X_min-X_max)/2.
+        
+        dict_names = {'UN':['m','s'],
+                      'JF':['m','s'],
+                      'IG':['m','s','a','b']
+                     }
+
+        dict_bounds = {'UN':[[X_min, X_max], [0,sigma_max**2]],
+                       'JF':[[X_min, X_max], [0,sigma_max**2]],
+                       'IG':[[X_min, X_max], [0,sigma_max**2], [0,a_max], [0,b_max]],
+                      }
+
+        dict_priors = {'UN': uniform,
+                       'JF': jeffreys,
+                       'IG': inverse_gamma
+                      }
         
         super(G_inference, self).__init__()
         
@@ -67,32 +69,32 @@ class G_inference(cpnest.model.Model):
         return np.sum(log_norm_1d(x['m'], self.values, x['s']+self.errors))
 
 
-def plot_distribution(post, model, out_folder):
+def plot_distribution(post, model, out_folder, label, unit, bounds):
 
-    G = np.linspace(G_min, G_max, 1000)
+    X = np.linspace(bounds[0], bounds[1], 1000)
     samps = np.column_stack([post['m'], np.sqrt(post['s'])])
     
     pdf = []
     for i,si in enumerate(samps):
-        f = norm(si[0], si[1]).pdf(G)
+        f = norm(si[0], si[1]).pdf(X)
         pdf.append(f)
     low_90, low_68, med, high_68, high_90 = np.percentile(pdf, [5,16,50,84,95], axis=0)
         
     c = corner.corner(samps,
-           labels= [r'$\hat{G}$',r'$\Sigma$'],
+           labels= [r'$\hat{'+label+'}$',r'$\Sigma$'],
            quantiles=[0.05, 0.16, 0.5, 0.84, 0.95],
            show_titles=True, title_fmt='.5f', title_kwargs={"fontsize": 16}, label_kwargs={"fontsize": 16},
            use_math_text=True)
     c.savefig(Path(out_folder,'joint_posterior_{0}.pdf'.format(model)), bbox_inches='tight')
     
     fig, ax = plt.subplots()
-    ax.fill_between(G, high_90, low_90, color = 'mediumturquoise', alpha = 0.5)
-    ax.fill_between(G, high_68, low_68, color = 'darkturquoise', alpha = 0.5)
+    ax.fill_between(X, high_90, low_90, color = 'mediumturquoise', alpha = 0.5)
+    ax.fill_between(X, high_68, low_68, color = 'darkturquoise', alpha = 0.5)
     # Median
-    ax.plot(G, med, lw = 0.7, color = 'steelblue')
+    ax.plot(X, med, lw = 0.7, color = 'steelblue')
     
-    ax.set_xlabel('$G\\times10^{-11}\ [\mathrm{m}^3\mathrm{kg}^{-1}\mathrm{s}^{-2}]$')
-    ax.set_ylabel('$p(G)$')
+    ax.set_xlabel('$'+ label +'\ ['+ unit +']$')
+    ax.set_ylabel('$p('+label+')$')
     ax.grid(visible = True)
     fig.savefig(Path(out_folder, 'p_{0}.pdf'.format(model)), bbox_inches = 'tight')
-    np.savetxt(Path(out_folder, 'prob_G_{0}.txt'.format(model)), np.array([G, med, low_90, low_68, high_68, high_90]).T, header = 'G 50 5 16 84 95')
+    np.savetxt(Path(out_folder, 'prob_{0}.txt'.format(model)), np.array([X, med, low_90, low_68, high_68, high_90]).T, header = 'X 50 5 16 84 95')

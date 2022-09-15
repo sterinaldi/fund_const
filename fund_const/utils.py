@@ -51,7 +51,7 @@ class parametric_inference(cpnest.model.Model):
                        'IG': inverse_gamma
                       }
         
-        super(G_inference, self).__init__()
+        super(parametric_inference, self).__init__()
         
         self.values = values
         self.errors = errors**2
@@ -60,7 +60,7 @@ class parametric_inference(cpnest.model.Model):
         self.prior  = dict_priors[model]
     
     def log_prior(self, x):
-        logP = super(G_inference, self).log_prior(x)
+        logP = super(parametric_inference, self).log_prior(x)
         if np.isfinite(logP):
             logP = self.prior(x)
         return logP

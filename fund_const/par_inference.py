@@ -1,6 +1,6 @@
 import numpy as np
 import optparse as op
-from fund_const.utils import parametric_inference, plot_distribution
+from utils import parametric_inference, plot_distribution
 from pathlib import Path
 import os
 

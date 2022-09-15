@@ -1,0 +1,7 @@
+file="data/plancksConstantWithLabels.dat"
+outfolder="planck"
+label="h"
+unit="\times 10^{-34}\ \mathrm{m}^2\mathrm{kg}\mathrm{s}^{-1}"
+bounds="[6.62601, 6.62612]"
+codata_val="6.626070040"
+codata_err="0.000000081"

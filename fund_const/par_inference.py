@@ -35,4 +35,4 @@ if __name__ == '__main__':
         post = work.posterior_samples.ravel()
         plot_distribution(post, mod, Path(options.out_folder).resolve(), options.label, options.unit, options.bounds)
     # Remove files from CPNest
-    [os.remove(f) for f in ['chain_{0}_0.txt'.format(n_live_points), 'chain_{0}_0.txt_evidence_0.txt'.format(n_live_points),'cpnest.log','header.txt']]
+    [os.remove(f) for f in ['chain_1000_0.txt', 'chain_1000_0.txt_evidence_0.txt','cpnest.log','header.txt']]

@@ -1,7 +1,9 @@
 # Project-specific
-experiments
-output
-options_log.txt
+*.txt
+*_config.sh
+*.dat
+*.pdf
+*.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

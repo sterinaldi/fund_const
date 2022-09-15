@@ -1,6 +1,4 @@
 # Project-specific
-*.txt
-*_config.sh
 *.dat
 *.pdf
 *.pkl

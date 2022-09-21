@@ -86,7 +86,7 @@ if __name__ == '__main__':
     
     ax.set_xlim(rec['x'].min(),rec['x'].max())
     ax.set_xlabel('$' + options.label+'\ ['+options.unit+']$')
-    plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA\ 2018}$', '$\mathrm{(H)DPGMM}$', '$\mathrm{(H)DPGMM - Conservative}$'])
+    plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA\ 2018}$', '$\mathrm{(H)DPGMM - 68\%}$', '$\mathrm{(H)DPGMM - 90\%}$'])
     ax.tick_params(axis='y', which='major', labelsize=6)
     ax.legend(loc = 0, frameon = False)
     ax.grid(visible = False)

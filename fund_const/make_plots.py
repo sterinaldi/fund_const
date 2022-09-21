@@ -56,14 +56,14 @@ if __name__ == '__main__':
     ax.plot(rec['x'], rec['50'], lw = 1, color = 'steelblue', label = '$\mathrm{(H)DPGMM}$')
     
     ymin, ymax = ax.get_ylim()
-    hs = np.linspace(0, ymax, len(data['value'])+9)
-    for hi, v, s in zip(hs[9:], data['value'][::-1], data['sigma'][::-1]):
+    hs = np.linspace(0, ymax, len(data['value'])+3)
+    for hi, v, s in zip(hs[3:], data['value'][::-1], data['sigma'][::-1]):
         ax.axhline(hi, lw = 0.02, c = 'k', ls = '--')
         ax.errorbar(v, hi, xerr = s, color = 'orange', marker = 'o', ms = 4)
 
     # CODATA value
-    ax.axhline(hs[8], lw = 0.02, c = 'k', ls = ':')
-    ax.errorbar(options.value, hs[8], xerr = options.error, color = 'blue', marker = 'o', ms = 4)
+    ax.axhline(hs[2], lw = 0.02, c = 'k', ls = ':')
+    ax.errorbar(options.value, hs[2], xerr = options.error, color = 'blue', marker = 'o', ms = 4)
 
 
 
@@ -71,10 +71,6 @@ if __name__ == '__main__':
     for i, mod in enumerate(models):
         cdf = fast_cumulative(np.ascontiguousarray(medians[mod]*(X[1]-X[0])))
         pcs = [X[np.where(cdf < perc)].max() for perc in [0.05, 0.16, 0.50, 0.84, 0.95]]
-        ax.axhline(hs[2*i+2], lw = 0.02, c = 'k', ls = ':')
-        ax.errorbar(pcs[2], hs[2*i+2], xerr = np.atleast_2d([pcs[2]-pcs[0], pcs[4]-pcs[2]]).T, color = colors[mod], marker = 'o', ms = 4)
-        ax.axhline(hs[2*i+3], lw = 0.02, c = 'k', ls = ':')
-        ax.errorbar(pcs[2], hs[2*i+3], xerr = np.atleast_2d([pcs[2]-pcs[1], pcs[3]-pcs[2]]).T, color = colors[mod], marker = 'o', ms = 4)
         print('{0}: '.format(mod)+'{:0.8f} - {:1.8f} + {:2.8f}. Conservative: - {:3.8f} + {:4.8f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]))
         print('{0}: '.format(mod)+'{:0.8f} - {:1.8f} + {:2.8f}. Conservative: - {:3.8f} + {:4.8f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]), file = out_file)
         
@@ -90,7 +86,7 @@ if __name__ == '__main__':
     
     ax.set_xlim(rec['x'].min(),rec['x'].max())
     ax.set_xlabel('$' + options.label+'\ ['+options.unit+']$')
-    plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA}$', '$\mathrm{IG}$', '$\mathrm{IG - Conservative}$','$\mathrm{JF}$', '$\mathrm{JF - Conservative}$','$\mathrm{UN}$', '$\mathrm{UN - Conservative}$', '$\mathrm{(H)DPGMM}$', '$\mathrm{(H)DPGMM - Conservative}$'])
+    plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA\ 2018}$', '$\mathrm{(H)DPGMM}$', '$\mathrm{(H)DPGMM - Conservative}$'])
     ax.tick_params(axis='y', which='major', labelsize=6)
     ax.legend(loc = 0, frameon = False)
     ax.grid(visible = False)

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import optparse as op
 from pathlib import Path
 # This import is just for plotting purposes
-from figaro.utils import plot_median_cr
+from figaro.plot import plot_median_cr
 from figaro.cumulative import fast_cumulative
 from seaborn import color_palette, light_palette
 

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import optparse as op
 from itertools import combinations
 from numba import jit
-from figaro.utils import *
+from figaro.plot import *
 from pathlib import Path
 
 @jit

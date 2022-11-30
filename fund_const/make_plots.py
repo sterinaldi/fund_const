@@ -7,19 +7,19 @@ from figaro.plot import plot_median_cr
 from figaro.cumulative import fast_cumulative
 from seaborn import color_palette, light_palette
 
-palette =  light_palette('darksalmon', 4)[1:]
+palette =  color_palette('husl', 40)[1:]
 
 
 models = ['UN', 'JF', 'IG']
 
-colors = {'UN': palette[1],
+colors = {'UN': 'limegreen',
           'JF': palette[0],
-          'IG': palette[2],
+          'IG': palette[30],
          }
 
-linestyle = {'UN': 'dotted',
+linestyle = {'UN': 'dashed',
              'JF': 'dashdot',
-             'IG': 'dashed',
+             'IG': 'dotted',
             }
 
 if __name__ == '__main__':
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     ax.set_xlim(rec['x'].min(),rec['x'].max())
     ax.set_xlabel('$' + options.label+'\ ['+options.unit+']$')
     plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA\ 2018}$', '$\mathrm{(H)DPGMM - 68\%}$', '$\mathrm{(H)DPGMM - 90\%}$'])
-    ax.tick_params(axis='y', which='major', labelsize=6)
+    ax.tick_params(axis='y', which='major', labelsize=9)
     ax.legend(loc = 0, frameon = False)
     ax.grid(visible = False)
     fig.savefig(Path(options.out_folder, 'post_dist.pdf'), bbox_inches = 'tight')

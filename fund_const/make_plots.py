@@ -2,10 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import optparse as op
 from pathlib import Path
-# This import is just for plotting purposes
-from figaro.plot import plot_median_cr
 from figaro.cumulative import fast_cumulative
 from seaborn import color_palette, light_palette
+from figaro import plot_settings
 
 palette =  color_palette('husl', 40)[1:]
 
@@ -85,7 +84,7 @@ if __name__ == '__main__':
     print('(H)DPGMM: {:0.8f} - {:1.8f} + {:2.8f}. Conservative: - {:3.8f} + {:4.8f}'.format(pcs[2], pcs[2]-pcs[1], pcs[3]-pcs[2], pcs[2]-pcs[0], pcs[4]-pcs[2]), file = out_file)
     
     ax.set_xlim(rec['x'].min(),rec['x'].max())
-    ax.set_xlabel('$' + options.label+'\ ['+options.unit+']$')
+    ax.set_xlabel('$' + options.label+'/'+options.unit+'$')
     plt.yticks(hs[::-1], ['$\mathrm{'+l+'}$' for l in data['label']] + ['$\mathrm{CODATA\ 2018}$', '$\mathrm{(H)DPGMM - 68\%}$', '$\mathrm{(H)DPGMM - 90\%}$'])
     ax.tick_params(axis='y', which='major', labelsize=9)
     ax.legend(loc = 0, frameon = False)

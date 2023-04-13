@@ -72,7 +72,7 @@ class parametric_inference(cpnest.model.Model):
 def plot_distribution(post, model, out_folder, label, unit, bounds):
 
     X = np.linspace(bounds[0], bounds[1], 1000)
-    samps = np.column_stack([post['m'], np.sqrt(post['s'])])
+    samps = np.column_stack([post['m'], post['s']])
     
     pdf = []
     for i,si in enumerate(samps):

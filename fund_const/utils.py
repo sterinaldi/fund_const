@@ -22,7 +22,7 @@ def jeffreys(x):
 
 # IG
 def inverse_gamma(x):
-    return x['a']*np.log(x['b']) - gammaln(x['a']) - (x['a']+1)*np.log(x['s']) - x['b']/x['s']
+    return x['a']*np.log(x['b']) - gammaln(x['a']) - (x['a']+1)*2*np.log(x['s']) - x['b']/(x['s']**2)
 
 def log_norm_1d(x, m, s):
     return -(x-m)**2/(2*s) - 0.5*np.log(2*np.pi*s)
@@ -34,16 +34,16 @@ class parametric_inference(cpnest.model.Model):
         
         X_min = bounds[0]
         X_max = bounds[1]
-        sigma_max =(X_min-X_max)/2.
+        sigma_max =(X_max-X_min)/2.
         
         dict_names = {'UN':['m','s'],
                       'JF':['m','s'],
                       'IG':['m','s','a','b']
                      }
 
-        dict_bounds = {'UN':[[X_min, X_max], [0,sigma_max**2]],
-                       'JF':[[X_min, X_max], [0,sigma_max**2]],
-                       'IG':[[X_min, X_max], [0,sigma_max**2], [0,a_max], [0,b_max]],
+        dict_bounds = {'UN':[[X_min, X_max], [0,sigma_max]],
+                       'JF':[[X_min, X_max], [0,sigma_max]],
+                       'IG':[[X_min, X_max], [0,sigma_max], [0,a_max], [0,b_max]],
                       }
 
         dict_priors = {'UN': uniform,
@@ -66,7 +66,7 @@ class parametric_inference(cpnest.model.Model):
         return logP
     
     def log_likelihood(self, x):
-        return np.sum(log_norm_1d(x['m'], self.values, x['s']+self.errors))
+        return np.sum(log_norm_1d(x['m'], self.values, x['s']**2+self.errors))
 
 
 def plot_distribution(post, model, out_folder, label, unit, bounds):
@@ -93,7 +93,7 @@ def plot_distribution(post, model, out_folder, label, unit, bounds):
     # Median
     ax.plot(X, med, lw = 0.7, color = 'steelblue')
     
-    ax.set_xlabel('$'+ label +'\ ['+ unit +']$')
+    ax.set_xlabel('$'+ label +'/'+ unit +'$')
     ax.set_ylabel('$p('+label+')$')
     ax.grid(visible = True)
     fig.savefig(Path(out_folder, 'p_{0}.pdf'.format(model)), bbox_inches = 'tight')

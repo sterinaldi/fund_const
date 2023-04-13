@@ -1,7 +1,7 @@
 file="data/newtonsConstantWithLabels.dat"
 outfolder="newtonG"
 label="G"
-unit="\times 10^{-11}\ \mathrm{m}^3\mathrm{km}^{-1}\mathrm{s}^{-2}"
+unit="10^{-11}\ \mathrm{m}^3\mathrm{km}^{-1}\mathrm{s}^{-2}"
 bounds="[6.668, 6.678]"
 codata_val="6.67430"
 codata_err="0.00015"

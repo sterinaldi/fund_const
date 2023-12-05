@@ -2,7 +2,7 @@ import numpy as np
 import optparse as op
 from scipy.stats import norm
 from pathlib import Path
-from figaro.utils import make_single_gaussian_mixture
+from figaro.utils import make_gaussian_mixture
 
 np.random.seed(1)
 n_draws = 1000
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     std   = data['sigma']
     names = data['label']
     
-    draws = make_single_gaussian_mixture(np.atleast_2d(means).T, np.atleast_2d(std**2).T, probit = False, bounds = options.bounds, save = True, out_folder = options.out_folder)
+    draws = make_gaussian_mixture(np.atleast_2d(means).T, np.atleast_2d(std**2).T, probit = False, bounds = options.bounds, save = True, save_samples = True, out_folder = options.out_folder)
     
     mins = []
     maxs = []

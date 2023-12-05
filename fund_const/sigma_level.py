@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import optparse as op
 from itertools import combinations
-from numba import jit
+from numba import njit
 from figaro.plot import *
 from pathlib import Path
 
-@jit
+@njit
 def s_level(m1,m2,s1,s2):
     return abs(m1-m2)/(np.sqrt(s1**2+s2**2))
 
